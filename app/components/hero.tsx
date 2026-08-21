@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AuditModalTrigger } from "./audit-modal";
 import SiteHeader from "./site-header";
 
 const BAR_HEIGHTS = [
@@ -31,7 +32,7 @@ export default function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <video className="hero-video" autoPlay muted loop playsInline preload="metadata" poster="/media/hero-poster.webp" aria-hidden="true">
-        <source src="/media/hero-video.mp4" type="video/mp4" />
+        <source src="/media/hero-video-original.mp4" type="video/mp4" />
       </video>
       <div className="hero-shade" aria-hidden="true" />
       <div className="hero-content">
@@ -41,7 +42,7 @@ export default function Hero() {
             <h1 id="hero-title" className="animate-up" style={{ animationDelay: "300ms" }}>Elevate your Instagram presence to new heights</h1>
             <p className="hero-subhead animate-up" style={{ animationDelay: "500ms" }}>Creator-led strategy, content and distribution built to turn attention into authority, growth and demand.</p>
             <div className="hero-actions animate-up" style={{ animationDelay: "700ms" }}>
-              <Link className="button button-light" href="/audit" data-analytics-event="audit_request_click" data-analytics-location="hero">Get a Free Social Presence Audit</Link>
+              <AuditModalTrigger className="button button-light" location="hero">Get a Free Social Presence Audit</AuditModalTrigger>
               <Link className="button button-outline" href="#results">See Results</Link>
             </div>
           </div>

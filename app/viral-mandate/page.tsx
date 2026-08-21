@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PageShell from "@/app/components/page-shell";
 
-export const metadata: Metadata = { title: "Viral Mandate", description: "A high-level explanation of Project Monet’s qualified performance-led Instagram mode and why more performance risk requires more creative control.", alternates: { canonical: "/viral-mandate" } };
+export const metadata: Metadata = { title: "Viral Mandate", description: "A high-level explanation of Project Monet’s qualified performance-led Instagram mode and why more performance risk requires more creative control.", alternates: { canonical: "/viral-mandate" }, robots: { index: false, follow: false } };
 
 export default function ViralMandatePage() {
   return (

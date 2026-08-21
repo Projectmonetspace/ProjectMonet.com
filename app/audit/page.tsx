@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import AuditForm from "@/app/components/audit-form";
 import PageShell from "@/app/components/page-shell";
 
-export const metadata: Metadata = { title: "Free Social Presence Audit", description: "Request a concise, free diagnosis of your Instagram positioning, content patterns, conversion gaps and highest-impact opportunities.", alternates: { canonical: "/audit" } };
+export const metadata: Metadata = { title: "Free Social Presence Audit", description: "Request a concise, free diagnosis of your Instagram positioning, content patterns, conversion gaps and highest-impact opportunities.", alternates: { canonical: "/audit" }, robots: { index: false, follow: false } };
 
 export default function AuditPage() {
   return (

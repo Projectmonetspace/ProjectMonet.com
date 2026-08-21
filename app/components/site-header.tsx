@@ -3,18 +3,20 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useAuditModal } from "./audit-modal";
 import BrandMark from "./brand-mark";
 
 const links = [
   { label: "Results", href: "/#results" },
   { label: "Method", href: "/#method" },
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Viral Mandate", href: "/viral-mandate" },
-  { label: "About", href: "/about" },
+  { label: "What We Do", href: "/#how-it-works" },
+  { label: "Viral Mandate", href: "/#viral-mandate" },
+  { label: "About", href: "/#about" },
 ];
 
 export default function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { openAuditModal } = useAuditModal();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -48,7 +50,7 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean }) {
             data-analytics-event="websites_link_click"
             data-analytics-location="header"
           >Websites ↗</a>
-          <Link className="nav-primary" href="/audit" data-analytics-event="audit_request_click" data-analytics-location="header">Free Audit</Link>
+          <button className="nav-primary" type="button" onClick={(event) => openAuditModal(event.currentTarget, "header")}>Free Audit</button>
         </div>
 
         <button
@@ -77,7 +79,7 @@ export default function SiteHeader({ overlay = false }: { overlay?: boolean }) {
             ))}
           </div>
           <div className="mobile-menu-divider" />
-          <Link className="button button-light" href="/audit" tabIndex={isOpen ? 0 : -1} onClick={() => setIsOpen(false)}>Get a Free Social Presence Audit</Link>
+          <button className="button button-light" type="button" tabIndex={isOpen ? 0 : -1} onClick={() => { const menuToggle = document.querySelector<HTMLElement>(".menu-toggle"); setIsOpen(false); openAuditModal(menuToggle, "mobile_menu"); }}>Get a Free Social Presence Audit</button>
           <a className="button button-outline" href="https://www.projectmonet.space" target="_blank" rel="noreferrer" tabIndex={isOpen ? 0 : -1}>Websites ↗</a>
         </div>
       </div>

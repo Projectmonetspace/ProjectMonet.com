@@ -1,5 +1,4 @@
-import Link from "next/link";
-import AuditForm from "./components/audit-form";
+import { AuditModalTrigger } from "./components/audit-modal";
 import Hero from "./components/hero";
 import ResultsRail from "./components/results-rail";
 import SiteFooter from "./components/site-footer";
@@ -35,28 +34,33 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="viral-teaser dark-section">
+        <section id="viral-mandate" className="viral-teaser dark-section">
           <div className="page-shell viral-grid">
             <div><p className="eyebrow">Qualified accounts only</p><h2>Viral Mandate</h2><p className="viral-doctrine">More performance risk = more creative control.</p></div>
-            <div><p>Where an account qualifies and brand, factual and legal guardrails are agreed, Project Monet may take greater creative discretion to pursue breakout performance. This is not an unconditional public guarantee.</p><Link className="text-link" href="/viral-mandate">Understand the mandate <span>↗</span></Link></div>
+            <div><p>Viral Mandate is available only to qualified accounts. Project Monet receives greater creative discretion within agreed guardrails, while any performance commitment, measurement method, client responsibilities, term and remedy remain engagement-specific. There is no blanket public guarantee.</p></div>
           </div>
         </section>
 
-        <section className="why-section orange-section">
+        <section id="about" className="why-section orange-section">
           <div className="page-shell why-grid">
             <div><p className="eyebrow">Why Project Monet</p><h2>Built by people who made things spread.</h2></div>
-            <div><p>Project Monet did not learn Instagram as an abstract marketing channel. Its creator-led origin comes from building audiences, studying hooks, formats, distribution, trend timing and page identity through real publishing.</p><p>That experience establishes judgement — not a guarantee. Founder proof, collaborator proof and client proof stay visibly separate.</p><Link className="button button-ink" href="/about">Our story and proof rules</Link></div>
+            <div><p>Project Monet did not learn Instagram as an abstract marketing channel. Its creator-led origin comes from building audiences, studying hooks, formats, distribution, trend timing and page identity through real publishing.</p><p>That experience establishes judgement — not a guarantee. Founder proof, collaborator proof and client proof stay visibly separate.</p></div>
           </div>
         </section>
 
         <section id="audit" className="audit-section warm-section">
           <div className="page-shell audit-grid">
             <div><p className="eyebrow">Primary conversion path</p><h2>Get a Free Social Presence Audit</h2><p>We’ll show you what is helping, what is holding the account back and the three highest-impact opportunities we see — before you decide whether to work with us.</p><ul><li>Profile and positioning snapshot</li><li>Recent content patterns</li><li>Conversion and trust issues</li><li>1–2 category observations</li><li>Three priority opportunities</li><li>A recommended next step</li></ul></div>
-            <AuditForm compact />
+            <div className="audit-invite">
+              <p className="eyebrow">Ready when you are</p>
+              <h3>Start with a focused account diagnosis.</h3>
+              <p>Tell us about the account inside a short, secure form. You’ll stay on this page from request through confirmation.</p>
+              <AuditModalTrigger className="button button-orange" location="audit_section">Request Audit</AuditModalTrigger>
+            </div>
           </div>
         </section>
 
-        <section className="final-cta dark-section"><div className="page-shell"><p className="eyebrow">Audit first. Recommend second.</p><h2>Turn attention into a presence worth following.</h2><p>Start with a concise diagnosis. Website enquiries remain at ProjectMonet.space.</p><div className="hero-actions"><Link className="button button-light" href="/audit">Get a Free Social Presence Audit</Link><a className="button button-outline" href="https://www.projectmonet.space" target="_blank" rel="noreferrer" data-analytics-event="websites_link_click" data-analytics-location="final_cta">Websites ↗</a></div></div></section>
+        <section className="final-cta dark-section"><div className="page-shell"><p className="eyebrow">Audit first. Recommend second.</p><h2>Turn attention into a presence worth following.</h2><p>Start with a concise diagnosis. Website enquiries remain at ProjectMonet.space.</p><div className="hero-actions"><AuditModalTrigger className="button button-light" location="final_cta">Get a Free Social Presence Audit</AuditModalTrigger><a className="button button-outline" href="https://www.projectmonet.space" target="_blank" rel="noreferrer" data-analytics-event="websites_link_click" data-analytics-location="final_cta">Websites ↗</a></div></div></section>
       </main>
       <SiteFooter />
     </>

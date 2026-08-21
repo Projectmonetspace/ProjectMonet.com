@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, statSync } from "node:fs";
 import test from "node:test";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
@@ -17,6 +18,7 @@ test("results rail cannot intercept wheel or pointer scrolling", () => {
   assert.doesNotMatch(rail, /preventDefault|onWheel|onPointerMove|setPointerCapture/);
   assert.match(css, /\.results-viewport \{[^}]*overflow: hidden/s);
   assert.match(rail, /reelResults: ReelResult\[\] = \[\]/);
+  assert.doesNotMatch(rail, /＋|reel-placeholder-mark/);
 });
 
 test("analytics is environment-configured and PII-free", () => {
@@ -27,13 +29,50 @@ test("analytics is environment-configured and PII-free", () => {
   assert.doesNotMatch(analytics, /name:|email:|phone:|instagram:/i);
 });
 
-test("required public routes, discovery files and favicon declarations exist", () => {
+test("sitemap exposes only the landing page and minimum legal routes", () => {
   const sitemap = read("app/sitemap.ts");
-  for (const route of ["/audit", "/viral-mandate", "/about", "/contact", "/privacy", "/cookies", "/terms", "/audit-terms"]) assert.match(sitemap, new RegExp(route.replace("/", "\\/")));
-  assert.doesNotMatch(sitemap, /"\/work"/);
+  for (const route of ["/privacy", "/cookies", "/terms", "/audit-terms"]) assert.match(sitemap, new RegExp(route.replace("/", "\\/")));
+  for (const route of ["/audit", "/work", "/about", "/contact", "/viral-mandate"]) assert.doesNotMatch(sitemap, new RegExp(`"${route.replace("/", "\\/")}"`));
   assert.match(read("app/layout.tsx"), /favicon-48x48\.png/);
   assert.match(read("public/site.webmanifest"), /512x512/);
   assert.match(read("public/llms.txt"), /Funnel-First Growth System/);
+});
+
+test("all retired primary routes are noindex and absent from public navigation", () => {
+  const header = read("app/components/site-header.tsx");
+  const footer = read("app/components/site-footer.tsx");
+  const pageShell = read("app/components/page-shell.tsx");
+  for (const route of ["audit", "work", "about", "contact", "viral-mandate"]) {
+    assert.match(read(`app/${route}/page.tsx`), /robots: \{ index: false, follow: false \}/);
+  }
+  assert.doesNotMatch(`${header}\n${footer}\n${pageShell}`, /href="\/(audit|work|about|contact|viral-mandate)"/);
+  for (const anchor of ["#results", "#method", "#how-it-works", "#viral-mandate", "#about"]) assert.match(header, new RegExp(anchor));
+});
+
+test("homepage uses one accessible audit modal instead of an inline form", () => {
+  const home = read("app/page.tsx");
+  const modal = read("app/components/audit-modal.tsx");
+  const form = read("app/components/audit-form.tsx");
+  assert.doesNotMatch(home, /<AuditForm/);
+  assert.match(home, /AuditModalTrigger/);
+  assert.match(modal, /role="dialog"/);
+  assert.match(modal, /aria-modal="true"/);
+  assert.match(modal, /document\.body\.style\.overflow = "hidden"/);
+  assert.match(modal, /event\.key === "Escape"/);
+  assert.match(modal, /returnFocusRef\.current\.focus\(\)/);
+  assert.match(modal, /focusableSelector/);
+  assert.match(form, /Your audit request is in\./);
+  assert.match(form, /clearest opportunities we see/);
+  assert.match(form, /https:\/\/api\.web3forms\.com\/submit/);
+});
+
+test("hero plays the byte-identical original-quality video asset", () => {
+  const hero = read("app/components/hero.tsx");
+  const videoUrl = new URL("../public/media/hero-video-original.mp4", import.meta.url);
+  const bytes = readFileSync(videoUrl);
+  assert.match(hero, /\/media\/hero-video-original\.mp4/);
+  assert.equal(statSync(videoUrl).size, 6363164);
+  assert.equal(createHash("sha256").update(bytes).digest("hex"), "380ceaeffe11d4f78a67fd718b694cd36c00bcf86f20848896774c9be60214c2");
 });
 
 test("methodology stays vertical at every viewport and audit delivery remains provider-controlled", () => {
