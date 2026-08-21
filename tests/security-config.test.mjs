@@ -8,8 +8,9 @@ test("security headers include required hardening", () => {
   for (const value of ["object-src 'none'", "frame-ancestors 'none'", "X-Content-Type-Options", "X-Frame-Options", "strict-origin-when-cross-origin", "camera=(), microphone=(), geolocation=()"] ) assert.match(source, new RegExp(value.replace(/[()]/g, "\\$&")));
 });
 
-test("CSP limits media to local assets and forms to self", () => {
+test("CSP limits media and permits only the direct Web3Forms API connection", () => {
   assert.match(source, /media-src 'self'/);
   assert.match(source, /form-action 'self'/);
-  assert.doesNotMatch(source, /cloudfront|api\.web3forms\.com/);
+  assert.match(source, /connect-src[^\n]*https:\/\/api\.web3forms\.com/);
+  assert.doesNotMatch(source, /cloudfront/);
 });

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { auditLimits } from "@/app/lib/audit";
+import { AUDIT_DELIVERY_EMAIL, auditLimits, buildWeb3FormsPayload, parseAuditPayload } from "@/app/lib/audit";
 import { trackAnalyticsEvent } from "@/app/lib/analytics";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
@@ -22,26 +22,33 @@ export default function AuditForm({ compact = false }: { compact?: boolean }) {
     const payload: Record<string, unknown> = Object.fromEntries(formData.entries());
     payload.privacyConsent = formData.get("privacyConsent") === "on";
 
+    const parsed = parseAuditPayload(payload);
+    if (!parsed.data) {
+      setErrors(parsed.errors);
+      setMessage(parsed.errors.form ?? "Please check the highlighted fields and try again.");
+      setStatus("error");
+      return;
+    }
+
     try {
-      const response = await fetch("/api/audit", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(buildWeb3FormsPayload(parsed.data)),
       });
-      const result = (await response.json()) as { ok?: boolean; message?: string; errors?: Record<string, string> };
-      if (!response.ok || !result.ok) {
-        setErrors(result.errors ?? {});
-        setMessage(result.message ?? "Please check the highlighted fields and try again.");
+      const result = (await response.json()) as { success?: boolean; message?: string };
+      if (!response.ok || !result.success) {
+        setMessage(`Your request could not be sent. Please try again or email ${AUDIT_DELIVERY_EMAIL}.`);
         setStatus("error");
         return;
       }
       setStatus("success");
-      setMessage(result.message ?? "Your audit request is in.");
+      setMessage("Your audit request is in. We’ll review the account and reply by email.");
       form.reset();
       trackAnalyticsEvent("generate_lead", { form_name: "free_social_presence_audit", page_path: window.location.pathname });
     } catch {
       setStatus("error");
-      setMessage("Your request could not be sent. Please try again or email contact@projectmonet.com.");
+      setMessage(`Your request could not be sent. Please try again or email ${AUDIT_DELIVERY_EMAIL}.`);
     }
   }
 

@@ -1,4 +1,5 @@
 export const WEB3FORMS_ACCESS_KEY = "68c5446a-5663-4fb3-b70a-968ad99e0360";
+export const AUDIT_DELIVERY_EMAIL = "projectmonet.com@gmail.com";
 
 export const auditLimits = {
   name: 80,
@@ -28,6 +29,27 @@ export type AuditPayload = {
   source: string;
   botcheck: string;
 };
+
+export function buildWeb3FormsPayload(data: AuditPayload) {
+  return {
+    access_key: WEB3FORMS_ACCESS_KEY,
+    subject: `Free Social Presence Audit — ${data.businessName}`,
+    from_name: "ProjectMonet.com Audit",
+    name: data.name,
+    email: data.email,
+    "Phone / WhatsApp": data.phone,
+    "Business / Creator": data.businessName,
+    Instagram: data.instagram,
+    "Niche / Category": data.niche,
+    "Primary goal": data.primaryGoal,
+    "Current content / resources": data.resources,
+    "Decision-maker": data.decisionMaker,
+    "Open to management": data.openToManagement,
+    "Additional context": data.message || "Not provided",
+    Source: data.source,
+    botcheck: "",
+  };
+}
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const handlePattern = /^@?[A-Za-z0-9._]{1,30}$/;

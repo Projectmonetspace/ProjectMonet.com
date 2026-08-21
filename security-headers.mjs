@@ -9,7 +9,7 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com",
   "font-src 'self' data:",
   "media-src 'self'",
-  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
+  "connect-src 'self' https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
   "manifest-src 'self'",
   "worker-src 'self' blob:",
   "upgrade-insecure-requests",
