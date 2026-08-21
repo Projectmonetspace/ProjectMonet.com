@@ -34,3 +34,15 @@ test("required public routes, discovery files and favicon declarations exist", (
   assert.match(read("public/site.webmanifest"), /512x512/);
   assert.match(read("public/llms.txt"), /Funnel-First Growth System/);
 });
+
+test("methodology stays vertical at every viewport and audit mail uses the operations inbox", () => {
+  const css = read("app/globals.css");
+  const audit = read("app/lib/audit.ts");
+  const form = read("app/components/audit-form.tsx");
+  assert.match(css, /\.method-flow \{[^}]*grid-template-columns: 1fr/s);
+  assert.doesNotMatch(css, /\.method-flow[^\n]*repeat\((?:3|9)/);
+  assert.doesNotMatch(css, /\.method-flow strong[^\n]*(?:writing-mode|rotate)/);
+  assert.match(audit, /AUDIT_DELIVERY_EMAIL = "projectmonet\.com@gmail\.com"/);
+  assert.match(form, /https:\/\/api\.web3forms\.com\/submit/);
+  assert.doesNotMatch(form, /fetch\("\/api\/audit"/);
+});

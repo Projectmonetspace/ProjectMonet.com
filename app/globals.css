@@ -123,11 +123,11 @@ img, video { display: block; max-width: 100%; }
 .method-section, .capabilities-section, .why-section, .audit-section { padding: 150px 0; }
 .split-heading { display: grid; grid-template-columns: 1.25fr .75fr; gap: 100px; align-items: end; margin-bottom: 90px; }
 .split-heading > p { max-width: 530px; margin: 0; font-size: 18px; line-height: 1.55; }
-.method-flow { display: grid; grid-template-columns: repeat(9, minmax(0,1fr)); gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.method-flow li { min-height: 160px; padding: 22px 14px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--line); }
-.method-flow li:last-child { border-right: 0; }
+.method-flow { display: grid; grid-template-columns: 1fr; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.method-flow li { min-height: 84px; padding: 20px 14px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.method-flow li:last-child { border-bottom: 0; }
 .method-flow span { color: var(--deep-orange); font-size: 11px; font-weight: 700; }
-.method-flow strong { font-size: 14px; font-weight: 600; line-height: 1.2; writing-mode: vertical-rl; transform: rotate(180deg); }
+.method-flow strong { font-size: 16px; font-weight: 600; line-height: 1.2; }
 .method-section blockquote { max-width: 1000px; margin: 100px 0 50px; font-size: clamp(36px, 4.5vw, 76px); line-height: 1; letter-spacing: -.05em; }
 .measure-chain { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .measure-chain i { color: var(--orange); font-style: normal; }
@@ -231,9 +231,6 @@ img, video { display: block; max-width: 100%; }
   .hero-row { flex-direction: column; align-items: flex-start; justify-content: center; gap: 52px; padding-top: 80px; padding-bottom: 70px; }
   .hero-copy { max-width: 760px; }
   .hero-proof { flex-basis: auto; margin-left: auto; }
-  .method-flow { grid-template-columns: repeat(3, 1fr); }
-  .method-flow li:nth-child(3n) { border-right: 0; }
-  .method-flow strong { writing-mode: initial; transform: none; }
   .capability-grid { grid-template-columns: repeat(2,1fr); }
 }
 
