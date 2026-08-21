@@ -29,20 +29,46 @@ test("analytics is environment-configured and PII-free", () => {
 
 test("required public routes, discovery files and favicon declarations exist", () => {
   const sitemap = read("app/sitemap.ts");
-  for (const route of ["/audit", "/viral-mandate", "/work", "/about", "/contact", "/privacy", "/cookies", "/terms", "/audit-terms"]) assert.match(sitemap, new RegExp(route.replace("/", "\\/")));
+  for (const route of ["/audit", "/viral-mandate", "/about", "/contact", "/privacy", "/cookies", "/terms", "/audit-terms"]) assert.match(sitemap, new RegExp(route.replace("/", "\\/")));
+  assert.doesNotMatch(sitemap, /"\/work"/);
   assert.match(read("app/layout.tsx"), /favicon-48x48\.png/);
   assert.match(read("public/site.webmanifest"), /512x512/);
   assert.match(read("public/llms.txt"), /Funnel-First Growth System/);
 });
 
-test("methodology stays vertical at every viewport and audit mail uses the operations inbox", () => {
+test("methodology stays vertical at every viewport and audit delivery remains provider-controlled", () => {
   const css = read("app/globals.css");
   const audit = read("app/lib/audit.ts");
   const form = read("app/components/audit-form.tsx");
   assert.match(css, /\.method-flow \{[^}]*grid-template-columns: 1fr/s);
   assert.doesNotMatch(css, /\.method-flow[^\n]*repeat\((?:3|9)/);
   assert.doesNotMatch(css, /\.method-flow strong[^\n]*(?:writing-mode|rotate)/);
-  assert.match(audit, /AUDIT_DELIVERY_EMAIL = "projectmonet\.com@gmail\.com"/);
+  assert.doesNotMatch(audit, /projectmonet\.com@gmail\.com/);
   assert.match(form, /https:\/\/api\.web3forms\.com\/submit/);
   assert.doesNotMatch(form, /fetch\("\/api\/audit"/);
+});
+
+test("public copy hides internal status, inbox and standalone work discovery", () => {
+  const results = read("app/components/results-rail.tsx");
+  const footer = read("app/components/site-footer.tsx");
+  const work = read("app/work/page.tsx");
+  const privacy = read("app/privacy/page.tsx");
+  const contact = read("app/contact/page.tsx");
+  const viral = read("app/viral-mandate/page.tsx");
+  const llms = read("public/llms.txt");
+  const publicCopy = [results, footer, work, privacy, contact, viral, llms].join("\n");
+
+  assert.match(results, />Results That Speak</);
+  assert.match(results, />We learned social by doing it\.</);
+  for (const phrase of ["production-ready rail", "Approved reel pending", "No media or metric", "Vertical page scroll", "CSS-only motion", "owner-approved", "intentionally unpopulated"]) assert.doesNotMatch(publicCopy, new RegExp(phrase, "i"));
+  assert.doesNotMatch(footer, /href="\/work"|>Proof</);
+  assert.match(work, /robots: \{ index: false, follow: false \}/);
+  assert.doesNotMatch(publicCopy, /projectmonet\.com@gmail\.com/);
+  assert.doesNotMatch(contact, /No public phone number/);
+  assert.match(contact, /Free Social Presence Audit/);
+  assert.match(contact, /contact@projectmonet\.com/);
+  assert.match(contact, /ProjectMonet\.space/);
+  assert.match(viral, /No blanket guarantee/);
+  assert.match(viral, /defined specifically for that engagement in the signed Statement of Work/);
+  assert.doesNotMatch(llms, /pending|not yet locked|guarantee clock|baseline formula|\/work/i);
 });

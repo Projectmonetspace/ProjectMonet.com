@@ -1,5 +1,4 @@
 export const WEB3FORMS_ACCESS_KEY = "68c5446a-5663-4fb3-b70a-968ad99e0360";
-export const AUDIT_DELIVERY_EMAIL = "projectmonet.com@gmail.com";
 
 export const auditLimits = {
   name: 80,

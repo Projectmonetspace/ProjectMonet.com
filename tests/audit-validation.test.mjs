@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { AUDIT_DELIVERY_EMAIL, buildWeb3FormsPayload, normalizeInstagram, parseAuditPayload, WEB3FORMS_ACCESS_KEY } from "../app/lib/audit.ts";
+import { buildWeb3FormsPayload, normalizeInstagram, parseAuditPayload, WEB3FORMS_ACCESS_KEY } from "../app/lib/audit.ts";
 
 const valid = {
   name: "Mayank",
@@ -41,12 +41,12 @@ test("rejects invalid contact, Instagram, consent and honeypot values", () => {
   assert.equal(result.data, undefined);
 });
 
-test("builds the public Web3Forms request for the audit operations inbox", () => {
+test("builds the public Web3Forms request without exposing its destination inbox", () => {
   const parsed = parseAuditPayload(valid);
   assert.ok(parsed.data);
   const provider = buildWeb3FormsPayload(parsed.data);
   assert.equal(provider.access_key, WEB3FORMS_ACCESS_KEY);
   assert.equal(provider.email, "mayank@example.com");
   assert.equal(provider["Business / Creator"], "Example Studio");
-  assert.equal(AUDIT_DELIVERY_EMAIL, "projectmonet.com@gmail.com");
+  assert.doesNotMatch(JSON.stringify(provider), /projectmonet\.com@gmail\.com/);
 });
