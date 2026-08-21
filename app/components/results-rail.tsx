@@ -27,7 +27,6 @@ export default function ResultsRail() {
           {[...placeholderCards, ...placeholderCards].map((card, index) => (
             <article className="reel-card reel-placeholder" key={`${card}-${index}`}>
               <div className="reel-grid" aria-hidden="true"><span /><span /><span /></div>
-              <div className="reel-placeholder-mark" aria-hidden="true">＋</div>
             </article>
           ))}
         </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import AnalyticsEvents from "./components/analytics-events";
+import AuditModalProvider from "./components/audit-modal";
 import CookieConsent from "./components/cookie-consent";
 import "./globals.css";
 
@@ -60,7 +61,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       </head>
-      <body className={inter.variable}>{children}<AnalyticsEvents /><CookieConsent /></body>
+      <body className={inter.variable}>
+        <AuditModalProvider>{children}<AnalyticsEvents /><CookieConsent /></AuditModalProvider>
+      </body>
     </html>
   );
 }

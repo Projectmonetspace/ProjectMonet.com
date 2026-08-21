@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PageShell from "@/app/components/page-shell";
 
-export const metadata: Metadata = { title: "About Project Monet", description: "The creator-led origin, methodology and proof standards behind Project Monet’s Instagram work.", alternates: { canonical: "/about" } };
+export const metadata: Metadata = { title: "About Project Monet", description: "The creator-led origin, methodology and proof standards behind Project Monet’s Instagram work.", alternates: { canonical: "/about" }, robots: { index: false, follow: false } };
 
 export default function AboutPage() {
   return (

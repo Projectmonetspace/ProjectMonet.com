@@ -7,7 +7,7 @@ import { trackAnalyticsEvent } from "@/app/lib/analytics";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-export default function AuditForm({ compact = false }: { compact?: boolean }) {
+export default function AuditForm({ compact = false, onClose }: { compact?: boolean; onClose?: () => void }) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -55,6 +55,18 @@ export default function AuditForm({ compact = false }: { compact?: boolean }) {
   const fieldError = (name: string) => errors[name] ? <span className="field-error" id={`${name}-error`}>{errors[name]}</span> : null;
   const describedBy = (name: string) => errors[name] ? `${name}-error` : undefined;
 
+  if (status === "success") {
+    return (
+      <div className="audit-form audit-success" role="status" aria-live="polite">
+        <span className="audit-success-mark" aria-hidden="true">✓</span>
+        <p className="eyebrow">Request received</p>
+        <h3>Your audit request is in.</h3>
+        <p>We’ll review your Instagram presence and get back to you with the clearest opportunities we see.</p>
+        {onClose && <button className="button button-orange" type="button" onClick={onClose}>Close</button>}
+      </div>
+    );
+  }
+
   return (
     <form className={`audit-form ${compact ? "audit-form-compact" : ""}`} onSubmit={handleSubmit} noValidate>
       <input type="hidden" name="source" value="projectmonet.com-free-audit" />
@@ -85,7 +97,7 @@ export default function AuditForm({ compact = false }: { compact?: boolean }) {
 
       <div className="form-submit-row">
         <button className="button button-orange" type="submit" disabled={status === "submitting"}>
-          {status === "submitting" ? "Sending…" : status === "success" ? "Request received" : "Get My Free Audit"}
+          {status === "submitting" ? "Sending…" : "Get My Free Audit"}
         </button>
         <p>The audit is a concise diagnosis, not a complete strategy. Submissions are reviewed for fit.</p>
       </div>
