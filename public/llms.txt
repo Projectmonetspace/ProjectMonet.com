@@ -12,12 +12,10 @@ Funnel-First Growth System: Positioning → TOFU → MOFU → BOFU → Publish �
 
 Core philosophy: Build the machine before pouring traffic into it.
 
-## Proof rules
+## Proof
 
 - 35M+ organic views, 102K+ combined followers, and 5+ originated trend formats are founder/creator credentials, not Project Monet client outcomes.
-- Founder/creator, team/collaborator, Project Monet client, and speculative/concept proof must remain separately labelled.
-- No client, testimonial, revenue, lead, follower, virality or other result should be inferred unless it is explicitly published with evidence and correct attribution.
-- Results That Speak is intentionally unpopulated in V1 pending owner-approved reels and verified metrics.
+- Creator/founder proof explains Project Monet’s first-hand social experience; it is not client proof.
 
 ## Free Social Presence Audit
 
@@ -25,19 +23,8 @@ The audit is free and concise. It may cover positioning, recent content patterns
 
 ## Viral Mandate
 
-Viral Mandate is a potential qualified mode where more performance risk requires more creative control inside approved brand, factual, legal and safety guardrails. Not every account qualifies. Exact thresholds, baseline formula, contract length, guarantee clock, exclusions and remedies are not publicly locked and must not be inferred.
+Viral Mandate is available only to qualified accounts. Any performance commitment, measurement method, client responsibilities, term and remedy are defined for the specific engagement in a signed Statement of Work.
 
-## Public routes
+## Public commercial position
 
-- / — Social-first homepage
-- /audit — Free Social Presence Audit request
-- /viral-mandate — high-level public explanation
-- /work — proof classifications and reel architecture
-- /about — creator-led origin and credentials
-- /contact — Social enquiry contact
-- /privacy — current data handling and Web3Forms retention
-- /cookies — optional analytics consent
-- /terms — website terms and no-guarantee boundaries
-- /audit-terms — audit scope and eligibility
-
-No pricing or package tiers are public in V1. Project Monet does not publish a phone number on this site.
+No pricing or package tiers are published on ProjectMonet.com.

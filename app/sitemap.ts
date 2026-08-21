@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const origin = "https://www.projectmonet.com";
-const routes = ["", "/audit", "/viral-mandate", "/work", "/about", "/contact", "/privacy", "/cookies", "/terms", "/audit-terms"];
+const routes = ["", "/audit", "/viral-mandate", "/about", "/contact", "/privacy", "/cookies", "/terms", "/audit-terms"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route, index) => ({

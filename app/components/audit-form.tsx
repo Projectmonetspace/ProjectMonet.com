@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { AUDIT_DELIVERY_EMAIL, auditLimits, buildWeb3FormsPayload, parseAuditPayload } from "@/app/lib/audit";
+import { auditLimits, buildWeb3FormsPayload, parseAuditPayload } from "@/app/lib/audit";
 import { trackAnalyticsEvent } from "@/app/lib/analytics";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
@@ -38,7 +38,7 @@ export default function AuditForm({ compact = false }: { compact?: boolean }) {
       });
       const result = (await response.json()) as { success?: boolean; message?: string };
       if (!response.ok || !result.success) {
-        setMessage(`Your request could not be sent. Please try again or email ${AUDIT_DELIVERY_EMAIL}.`);
+        setMessage("Your request could not be sent. Please try again or email contact@projectmonet.com.");
         setStatus("error");
         return;
       }
@@ -48,7 +48,7 @@ export default function AuditForm({ compact = false }: { compact?: boolean }) {
       trackAnalyticsEvent("generate_lead", { form_name: "free_social_presence_audit", page_path: window.location.pathname });
     } catch {
       setStatus("error");
-      setMessage(`Your request could not be sent. Please try again or email ${AUDIT_DELIVERY_EMAIL}.`);
+      setMessage("Your request could not be sent. Please try again or email contact@projectmonet.com.");
     }
   }
 
